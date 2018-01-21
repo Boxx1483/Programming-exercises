@@ -1,0 +1,35 @@
+#Bo Mikkelsen
+#date 19-01-2018
+#Exercise 1
+#This program will tell if a given IP-address is valid and can be used.
+
+#importing the IP address
+import ipaddress
+
+def main():
+    userinput = input('Enter a IP-Addres in the format (192.168.4.1):')
+    print('-'*25)
+    checker(userinput)
+
+def checker(userinput):
+    try:
+        valid=ipaddress.IPv4Address(userinput)
+        print(valid,'This is a Valid address')
+        if valid.is_private is True:
+            print('-'*25)
+            print('The address is a private address')
+        elif valid.is_global is True:
+            print('-'*25)
+            print('The address is a public address')
+    except ValueError:
+        print('ValueError pls try again, Hint: do not use subnet mask:')
+        main()
+    else:
+        print('-'*25)
+        Again = str.lower(input('Do you want to try again?, y = yes, n = no:'))
+        if Again == 'y':
+            main()
+        else:
+            exit()
+
+main()
