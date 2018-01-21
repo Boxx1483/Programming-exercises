@@ -1,0 +1,48 @@
+#Bo Mikkelsen
+#date 19-01-2018
+#Exercise 1
+#This program will test if an entered ip address is a valid address in a subnet
+
+#importing ip-address moduele
+import ipaddress
+
+def main():
+    userinput = input("Enter a private network address in CIDR format(ex.192.168.1.60/24): ")
+    try:
+        valid = ipaddress.ip_network(userinput,strict=False)
+        if valid.is_private is True:
+            print('-' * 25)
+            pass
+        elif valid.is_global is True:
+            print('-' * 25)
+            print('The address entered is public, and therefore can not have a subnet mask:')
+            print('Try again with a private')
+            main()
+        elif valid.is_multicast is True:
+            print('-' * 25)
+            print('The address entered is a multicast address, and therefore''\n'
+                         ' can not have a subnet mask:')
+            print('Try again with a private address')
+            main()
+    except ValueError:
+        print('-' * 25)
+        print('This is not a valid address')
+        print('Try again pls')
+        main()
+    else:
+        checker(valid)
+
+def checker(valid):
+    print('-'*25)
+    print('The subnet for that address is:',valid)
+    print('This is a valid address in this subnet')
+    Again = str.lower(input('Do you want to try again?, y = yes, n = no:'))
+    if Again == 'y':
+        main()
+    else:
+        print('-' * 25)
+        print('The program is closing:')
+        exit()
+
+
+main()
